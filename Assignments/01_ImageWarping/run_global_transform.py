@@ -26,7 +26,6 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
 
     #scale
     scale_matrix = np.array([[scale, 0, (1-scale)*cols//2], [0, scale, (1-scale)*rows//2]], dtype=np.float32)
-    print(scale_matrix)
 
     transformed_image = cv2.warpAffine(transformed_image, scale_matrix, (cols, rows))
 
@@ -40,7 +39,6 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
     rota = np.array([[cos, -sin, a-a*cos+b*sin], [sin, cos, b-a*sin-b*cos]])
     transformed_image = cv2.warpAffine(transformed_image, rota, (cols, rows))
 
-    print(transformed_image.shape)
 
     # translation
 

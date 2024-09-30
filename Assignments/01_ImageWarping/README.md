@@ -1,31 +1,7 @@
-# Assignment 1 - Image Warping
-
-### In this assignment, you will implement basic transformation and point-based deformation for images.
-
-### Resources:
-- [Teaching Slides](https://rec.ustc.edu.cn/share/afbf05a0-710c-11ef-80c6-518b4c8c0b96) 
-- [Paper: Image Deformation Using Moving Least Squares](https://people.engr.tamu.edu/schaefer/research/mls.pdf)
-- [Paper: Image Warping by Radial Basis Functions](https://www.sci.utah.edu/~gerig/CS6640-F2010/Project3/Arad-1995.pdf)
-- [OpenCV Geometric Transformations](https://docs.opencv.org/4.x/da/d6e/tutorial_py_geometric_transformations.html)
-- [Gradio: 一个好用的网页端交互GUI](https://www.gradio.app/)
-
-### 1. Basic Image Geometric Transformation (Scale/Rotation/Translation).
-Fill the [Missing Part](run_global_transform.py#L21) of 'run_global_transform.py'.
-
-
-### 2. Point Based Image Deformation.
-
-Implement MLS or RBF based image deformation in the [Missing Part](run_point_transform.py#L52) of 'run_point_transform.py'.
-
----
-## 一个作业提交模板 (里面的结果也可参考)
-
 
 ## Implementation of Image Geometric Transformation
 
-This repository is Yudong Guo's implementation of Assignment_01 of DIP. 
-
-<img src="pics/teaser.png" alt="alt text" width="800">
+This repository is Zhijun Wang's implementation of Assignment_01 of DIP. 
 
 ## Requirements
 
@@ -50,12 +26,41 @@ To run point guided transformation, run:
 python run_point_transform.py
 ```
 
-## Results (need add more result images)
+## Results
 ### Basic Transformation
-<img src="pics/global_demo.gif" alt="alt text" width="800">
+- scale
+  | ![image-20240930185701939](pics/scale0.png) | ![scale1](pics/scale1.png) |
+  | ------------------------------------------- | -------------------------- |
+  | ![scale2](pics/scale2.png)                  | ![scale3](pics/scale3.png) |
+  
+- rotation
+  | ![ro0](pics/rotation0.png) | ![ro1](pics/rotation1.png) |
+  | -------------------------- | -------------------------- |
+  | ![ro2](pics/rotation2.png) | ![ro3](pics/rotation3.png) |
+
+  
+
+
+
+- translation
+  | ![trans0](pics/translation0.png) | ![trans1](pics/translation1.png) |
+  | -------------------------------- | -------------------------------- |
+  | ![trans2](pics/translation2.png) | ![trans3](pics/translation3.png) |
+
+- flip
+  | ![flip0](pics/translation2.png) | ![flip1](pics/flip.png) |
+  | ------------------------------- | ----------------------- |
+
+  
+
+
 
 ### Point Guided Deformation:
-<img src="pics/point_demo.gif" alt="alt text" width="800">
+
+| ![warp0](pics/warp0.png) | ![warp1](pics/warp1.png) |
+| ------------------------ | ------------------------ |
+
+
 
 ## Acknowledgement
 

@@ -21,6 +21,38 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
     ### FILL: Apply Composition Transform 
     # Note: for scale and rotation, implement them around the center of the image （围绕图像中心进行放缩和旋转）
 
+    rows, cols = transformed_image.shape[0:2]
+
+
+    #scale
+    scale_matrix = np.array([[scale, 0, (1-scale)*cols//2], [0, scale, (1-scale)*rows//2]], dtype=np.float32)
+    print(scale_matrix)
+
+    transformed_image = cv2.warpAffine(transformed_image, scale_matrix, (cols, rows))
+
+    # rotation
+    rotation = np.pi / 180 * rotation
+    cos = np.cos(rotation)
+    sin = np.sin(rotation)
+    a = cols//2
+    b = rows//2
+    
+    rota = np.array([[cos, -sin, a-a*cos+b*sin], [sin, cos, b-a*sin-b*cos]])
+    transformed_image = cv2.warpAffine(transformed_image, rota, (cols, rows))
+
+    print(transformed_image.shape)
+
+    # translation
+
+    translation = np.array([[1, 0, translation_x], [0, 1, -translation_y]], dtype=np.float32)
+    transformed_image = cv2.warpAffine(transformed_image, translation, (cols, rows))
+
+    #flip
+    s = -2 * flip_horizontal + 1
+    flip = np.array([[s, 0, (1-s)*cols//2], [0, 1, 0]], dtype=np.float32)
+    transformed_image = cv2.warpAffine(
+        transformed_image, flip, (cols, rows))
+
     return transformed_image
 
 # Gradio Interface

@@ -47,9 +47,70 @@ def point_guided_deformation(image, source_pts, target_pts, alpha=1.0, eps=1e-8)
     ------
         A deformed image.
     """
-    
     warped_image = np.array(image)
+    source_pts = source_pts[..., [1, 0]]
+    target_pts = target_pts[..., [1, 0]]
     ### FILL: 基于MLS or RBF 实现 image warping
+    H, W = image.shape[0:2]
+    u = np.repeat(np.arange(H)[:, None, None], W, axis=1)
+    v = np.repeat(np.arange(W)[None, :, None], H, axis=0)
+
+    # (H, W, 2)
+    map = np.concatenate([u, v], axis=-1)
+
+
+    # (k, 2)
+    p = target_pts
+    q = source_pts
+
+    k = p.shape[0]
+
+    #(k, H, W, 1)
+    w = p[:, None, None, :] - map[None, ...]
+    w = np.linalg.norm(w, axis=-1, keepdims=True) ** (2 * alpha)
+    # 去掉差值为0的点
+    # w[np.arange(k), p[..., 0], p[..., 1]] = 1
+
+    w = 1 / (w + eps)
+
+    # (1, H, W, 2)
+    p_star = np.sum(w * p[:, None, None, :], axis=0, keepdims=True) / np.sum(w, axis=0, keepdims=True)
+    q_star = np.sum(w * q[:, None, None, :], axis=0, keepdims=True) / np.sum(w, axis=0, keepdims=True)
+
+    # (k, H, W, 2)
+    p_hat = p[:, None, None, :] - p_star
+    q_hat = q[:, None, None, :] - q_star
+
+    # (1, H, W, 2)
+    A_0 = map[None, ...] - p_star
+
+    # (1, H, W, 2, 2)
+    A_1 = np.linalg.inv(np.sum(p_hat[..., None] @ p_hat[..., None, :] * w[..., None], axis=0, keepdims=True))
+
+    #(k, H, W, 2)
+    A_2 = w * p_hat
+
+    #(k, H, W, 1, 1)
+    A = A_0[..., None, :] @ A_1 @ A_2[..., None]
+
+    ind = np.sum(A[..., 0] * q_hat, axis=0) + q_star[0]
+
+    # ind[p[..., 0], p[..., 1]] = q
+
+    ind[..., 0] = np.clip(ind[..., 0], 0, H-1)
+    ind[..., 1] = np.clip(ind[..., 1], 0, W-1)
+
+    ind = ind.astype(np.int32)
+
+    temp = np.zeros_like(warped_image)
+    temp[map[..., 0], map[..., 1]] = warped_image[ind[..., 0], ind[..., 1]]
+
+    warped_image = temp
+
+    
+
+
+
 
     return warped_image
 

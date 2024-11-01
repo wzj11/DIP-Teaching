@@ -43,9 +43,9 @@ python run_blending_gradio.py
 使用的数据集为：
 [cityscapes-dataset](https://www.cityscapes-dataset.com/)
 
-| ---- | ---- |
-|![source](src/1.png)|![target](src/2.png)|
 
+|![source](src/1.png)|![target](src/2.png)|
+| ---- | ---- |
 
 
 

@@ -91,7 +91,7 @@ Close Eyes
 
 ### DragGAN
 
-<video src="source/video.mkv"></video>
+<video src="source/video.mp4"></video>
 
 
 

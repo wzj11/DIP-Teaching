@@ -91,7 +91,8 @@ Close Eyes
 
 ### DragGAN
 
-<video src="source/video.mp4"></video>
+https://github.com/user-attachments/assets/1706638c-a679-49f8-b653-4e9c169d7539
+
 
 
 

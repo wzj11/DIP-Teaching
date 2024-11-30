@@ -23,7 +23,6 @@ numpy 1.26.4
 ### Make DragGAN Automatic with Facial Landmarks
 
 1. install DragGAN firstly
-
 from repo [DragGAN](https://github.com/XingangPan/DragGAN)
 
 ```bash
@@ -36,7 +35,6 @@ pip install -r requirements.txt
 ```
 
 2. install face-alignment
-
 from repo [face-alignment](https://github.com/1adrianb/face-alignment)
 
 ```bash
@@ -69,9 +67,13 @@ WebUI:
 ![web](source/use.png)
 
 点击
+
 Face Alignment
+
 Close Mouth
+
 Close Eyes
+
 执行对应操作
 
 

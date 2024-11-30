@@ -80,17 +80,12 @@ Close Eyes
 ### Pix2Pix
 
 |input|generated|groud truth|
-| ---- | ---- | ---- |
 |![input_1](source/1_input.png)|![pred_1](source/1_pred.png)|![gt_1](source/1_gt.png)|
-| ---- | ---- |
 |![input_2](source/2_input.png)|![pred_2](source/2_pred.png)|![gt_2](source/2_gt.png)|
-| ---- | ---- |
 |![input_3](source/3_input.png)|![pred_3](source/3_pred.png)|![gt_3](source/3_gt.png)|
-| ---- | ---- |
 |![input_4](source/4_input.png)|![pred_4](source/4_pred.png)|![gt_4](source/4_gt.png)|
-| ---- | ---- |
-|![input_5](source/5_input.png)|![pred_5](source/5_pred.png)|![gt_5](source/5_gt.png)|
-| ---- | ---- |
+|![input_0](source/0_input.png)|![pred_0](source/0_pred.png)|![gt_0](source/0_gt.png)|
+
 
 
 

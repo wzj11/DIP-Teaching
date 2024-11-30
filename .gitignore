@@ -1,1 +1,11 @@
 model.py
+Assignments/02_DIPwithPyTorch/*
+*.pth
+*.pyc
+# **/m/*
+**/datasets/*
+**/gtFine/*
+**/train_results/*
+**/val_results/*
+*.sh
+*.zip

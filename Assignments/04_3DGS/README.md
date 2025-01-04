@@ -1,5 +1,35 @@
 # Assignment 4 - Implement Simplified 3D Gaussian Splatting
 
+### 作业实现过程
+
+#### 环境配置
+
+使用python3.8以及pytorch2.4.1
+
+安装pytorch：
+```bash
+conda install pytorch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1  pytorch-cuda=11.8 -c pytorch -c nvidia
+```
+
+#### 实验结果
+
+重建椅子
+
+1. 作业结果：
+
+    | input | output |
+    | --- | --- |
+    | ![input](src/input0.png) | ![output](src/output0.png) |
+
+2. 原版高斯效果
+
+    | input | output |
+    | --- | --- |
+    | ![input](src/r_46.png) | ![output](src/00047.png) |
+
+
+---
+
 This assignment covers a complete pipeline for reconstructing a 3D scene represented by 3DGS from multi-view images. The following steps use the [chair folder](data/chair); you can use any other folder by placing images/ in it.
 
 ### Resources:

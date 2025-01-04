@@ -42,19 +42,22 @@ class GaussianRenderer(nn.Module):
         # 3. Project to screen space using camera intrinsics
         screen_points = cam_points @ K.T  # (N, 3)
         means2D = screen_points[..., :2] / screen_points[..., 2:3] # (N, 2)
-        
         # 4. Transform covariance to camera space and then to 2D
         # Compute Jacobian of perspective projection
         J_proj = torch.zeros((N, 2, 3), device=means3D.device)
         ### FILL:
         ### J_proj = ...
-        
+        # proj = torch.zeros((1, 2, 3), device=means3D.device)
+        J_proj[..., 0, 0] = K[0, 0] / cam_points[..., 2]
+        J_proj[..., 0, 2] = - K[0, 0] / (cam_points[..., 2] ** 2) * cam_points[..., 0]
+        J_proj[..., 1, 1] = K[1, 1] / cam_points[..., 2]
+        J_proj[..., 1, 2] = - K[1, 1] / (cam_points[..., 2] ** 2) * cam_points[..., 1]
         # Transform covariance to camera space
         ### FILL: Aplly world to camera rotation to the 3d covariance matrix
         ### covs_cam = ...  # (N, 3, 3)
-        
+        covs_cam = R @ covs3d @ R.T
         # Project to 2D
-        covs2D = torch.bmm(J_proj, torch.bmm(covs_cam, J_proj.permute(0, 2, 1)))  # (N, 2, 2)
+        covs2D = J_proj @ covs_cam @ J_proj.permute(0, 2, 1)  # (N, 2, 2)
         
         return means2D, covs2D, depths
 
@@ -77,7 +80,14 @@ class GaussianRenderer(nn.Module):
         # Compute determinant for normalization
         ### FILL: compute the gaussian values
         ### gaussian = ... ## (N, H, W)
-    
+        dx_T = dx.reshape(N, H, W, 1, 2)
+        dx = dx.reshape(N, H, W, 2, 1)
+        covs2D_inv = torch.inverse(covs2D.reshape(N, 1, 1, 2, 2))
+        # P = torch.matmul(dx, torch.matmul(covs2D_inv, dx))
+        P = dx_T @ covs2D_inv @ dx
+        
+        gaussian = torch.exp(-0.5 * P.squeeze(-1).squeeze(-1)) / (2 * np.pi * torch.det(covs2D).sqrt()[..., None, None])
+
         return gaussian
 
     def forward(
@@ -116,10 +126,11 @@ class GaussianRenderer(nn.Module):
         alphas = opacities.view(N, 1, 1) * gaussian_values  # (N, H, W)
         colors = colors.view(N, 3, 1, 1).expand(-1, -1, self.H, self.W)  # (N, 3, H, W)
         colors = colors.permute(0, 2, 3, 1)  # (N, H, W, 3)
-        
+    
         # 7. Compute weights
         ### FILL:
         ### weights = ... # (N, H, W)
+        weights = alphas * torch.cumprod(1 - alphas, dim=0)
         
         # 8. Final rendering
         rendered = (weights.unsqueeze(-1) * colors).sum(dim=0)  # (H, W, 3)
